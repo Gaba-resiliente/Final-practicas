@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "venv/bin/python3",
-    "python.venvFolders": [
-        "/home/javier/proyectoflask/entornoflask/"
-    ],
-    "python.venvPath": "/home/javier/proyectoflask/entornoflask/"
-}
