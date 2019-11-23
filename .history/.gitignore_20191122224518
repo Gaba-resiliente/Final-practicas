@@ -10,8 +10,7 @@
 *.sig
 
 entornoflask/
-/Final-practicas/.history
-/Final-practicas/.vscode
+
 pkg/
 src/
 venv/
