@@ -1,6 +1,9 @@
 from datetime import datetime
 from app import db
-class User (db.Model):
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from app import login
+class User (UserMixin,db.Model):
       id = db.Column(db.Integer, primary_key=True)
       nombre_apellido = db.Column(db.String(80), nullable=False)
       email = db.Column(db.String(256), unique=True, nullable=False)
@@ -11,6 +14,15 @@ class User (db.Model):
 
       def __repr__(self):
           return '<User {}>'.format(self.nombre_apellido)   
+      
+      def set_password(self, contraseña):
+        self.password_hash = generate_password_hash(contraseña)
+
+      def check_password(self, contraseña):
+        return check_password_hash(self.password_hash, contraseña)
+@login.user_loader
+def load_user(id):
+        return User.query.get(int(id))
 
 class Objetivos (db.Model):
       id = db.Column(db.Integer, primary_key=True)
