@@ -15,3 +15,4 @@ entornoflask/
 pkg/
 src/
 venv/
+__pycache__/objetivos.cpython-37.pyc
