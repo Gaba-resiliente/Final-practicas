@@ -17,6 +17,15 @@ def index():
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)
 
+<<<<<<< HEAD
+=======
+
+
+from .forms import LoginForm
+
+# ...
+
+>>>>>>> d385cad6a48699c62376d7136a0094bf3e5e88e4
 @app.route('/login')
 def login():
     form = LoginForm()
