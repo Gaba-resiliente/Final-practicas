@@ -19,7 +19,7 @@ def index():
 
 
 
-from app.forms import LoginForm
+from .forms import LoginForm
 
 # ...
 
