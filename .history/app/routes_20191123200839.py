@@ -7,7 +7,7 @@ from flask_login import logout_user
 from flask_login import login_required
 from app.forms import RegistrationForm
 
-@app.route('/app/templates')
+@app.route('/')
 @app.route('/index')
 @login_required
 def index():
