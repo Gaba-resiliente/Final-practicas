@@ -61,6 +61,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
+<<<<<<< HEAD
 @app.route('/user/<username>')
 @login_required
 def user(username):
@@ -70,3 +71,9 @@ def user(username):
         {'author': user, 'body': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+=======
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm(current_user.username)
+>>>>>>> 3c93b169f32ecf44f686a6ea5e6bb971b8a48af1
