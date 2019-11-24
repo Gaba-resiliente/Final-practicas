@@ -8,7 +8,9 @@
 *.log
 *.log.*
 *.sig
+*.pyc
 
+.history/
 entornoflask/
 /Final-practicas/.history
 /Final-practicas/.vscode
