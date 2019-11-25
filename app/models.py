@@ -1,8 +1,9 @@
 from datetime import datetime
-from app import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from app import db, login
 from flask_login import UserMixin
-from app import login
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 class User (UserMixin,db.Model):
       id = db.Column(db.Integer, primary_key=True)
       username= db.Column(db.String(80), nullable=False)
@@ -44,17 +45,3 @@ class Acciones (db.Model):
       def __repr__(self):
          return '<Acciones {}>' % (self.como)
 
-class EditProfileForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
-    submit = SubmitField('Submit')
-
-    def __init__(self, original_username, *args, **kwargs):
-        super(EditProfileForm, self).__init__(*args, **kwargs)
-        self.original_username = original_username
-
-    def validate_username(self, username):
-        if username.data != self.original_username:
-            user = User.query.filter_by(username=self.username.data).first()
-            if user is not None:
-                raise ValidationError('Please use a different username.')
