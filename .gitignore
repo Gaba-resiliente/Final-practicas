@@ -22,3 +22,5 @@ __pycache__/objetivos.cpython-37.pyc
  app/__pycache__/forms.cpython-37.pyc                                       
  app/__pycache__/models.cpython-37.pyc                                      
  app/__pycache__/routes.cpython-37.pyc
+__pycache__/
+app/__pycache__
