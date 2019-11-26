@@ -29,6 +29,15 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Papu usa otro email.')
+class ObjetivosForm(FlaskForm):
+    nombre= StringField('Nombre', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    que = StringField('Que', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    porque = StringField('por que', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('mandale pa!')
+    
 
 
 
