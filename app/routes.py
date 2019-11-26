@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
@@ -6,11 +7,11 @@ from app.forms import LoginForm, RegistrationForm
 from app.models import User
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-     posts = [
+    posts = [
         {
             'author': {'username': 'John'},
             'body': 'Beautiful day in Portland!'
@@ -19,9 +20,8 @@ def index():
             'author': {'username': 'Susan'},
             'body': 'The Avengers movie was so cool!'
         }
-     ]
-     return render_template('index.html', title='Home Page', posts=posts)
-
+    ]
+    return render_template('index.html', title='Home', post=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -53,7 +53,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, email=form.email.data, puesto=form.puesto.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
