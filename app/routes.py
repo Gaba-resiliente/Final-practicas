@@ -3,25 +3,24 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, ObjetivosForm
+from app.models import User, Objetivos
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', post=posts)
+    form = ObjetivosForm()
+    if form.validate_on_submit():
+        objetivos = Objetivos(nombre=form.nombre.data, que=form.que.data, porque=form.porque.data, author=current_user)
+        db.session.add(objetivos)
+        db.session.commit()
+        flash('Se cargo un Objetivo')
+        return redirect(url_for('index'))
+    obje = Objetivos.get_all()
+    
+    return render_template("index.html", title='Home Page', form=form, posts=obje)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,7 +30,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Usuario o contraseña invalidas')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -57,7 +56,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash('Bravo!!, Ya estas Registrado!!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 

@@ -8,27 +8,36 @@ from app.models import User
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    remember_me = BooleanField('Recordarme')
+    submit = SubmitField('Aceptar')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        'Repetir Password', validators=[DataRequired(), EqualTo('password')])
     puesto = StringField('Puesto', validators=[DataRequired()])
-    submit = SubmitField('Register')
+    submit = SubmitField('Registrarse')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('Please use a different username.')
+            raise ValidationError('Papu usa otro nombre.')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Please use a different email address.')
+            raise ValidationError('Papu usa otro email.')
+class ObjetivosForm(FlaskForm):
+    nombre= StringField('Nombre', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    que = StringField('Que', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    porque = StringField('por que', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('mandale pa!')
+    
 
 
 

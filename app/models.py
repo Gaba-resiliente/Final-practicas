@@ -13,7 +13,7 @@ class User (UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     lider = db.Column(db.Boolean, default=False)
     puesto = db.Column(db.String(80), nullable=True)
-    objetivos = db.relationship('Objetivos', backref='User', lazy='dynamic')
+    objetivos = db.relationship('Objetivos', backref='author', lazy='dynamic')
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
     
@@ -57,7 +57,9 @@ class Objetivos (db.Model):
       usuario_id = db.Column(db.Integer, db.ForeignKey('user.id'))  
   
       def __repr__(self):
-          return '<Objetivos {}>' % (self.nombre)    
+          return '<Objetivos {}>' % (self.nombre)
+      def get_all():
+        return Objetivos.query.all()  
 
 class Acciones (db.Model):
       id = db.Column(db.Integer, primary_key=True)
