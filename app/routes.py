@@ -11,7 +11,10 @@ from app.models import User, Objetivos
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template("index.html", title='Home Page')
+    user = User.query.get(current_user.id)
+    obj = user.objetivos.all()
+    print(current_user.objetivos)
+    return render_template("index.html", title='Home Page', objetivos=obj)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -107,3 +110,4 @@ def objetivos():
     obje = Objetivos.get_all()
     users = User.get_all()
     return render_template("Objetivos.html", title='Objetivos', form=form, objetivos=obje, users=users)
+

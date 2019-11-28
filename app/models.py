@@ -56,10 +56,10 @@ class Objetivos (db.Model):
       que = db.Column(db.String(200), nullable=False)
       porque = db.Column(db.String(200), nullable=False)
       fecha_inicio = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-      usuario_id = db.Column(db.Integer, db.ForeignKey('user.id'))  
-  
+      usuario_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+      acciones = db.relationship('Acciones', backref='action', lazy='dynamic')
       def __repr__(self):
-          return '<Objetivos {}>' % (self.nombre)
+          return "Objetivo'{0}' Hacer '{1}' porque '{2}'".format(self.nombre, self.que, self.porque)
       def get_all():
         return Objetivos.query.all()  
 
@@ -67,7 +67,7 @@ class Acciones (db.Model):
       id = db.Column(db.Integer, primary_key=True)
       como = db.Column(db.String(200), nullable=False)
       fecha_fin = db.Column(db.DateTime)
-      objetivos_id = db.Column(db.Integer, db.ForeignKey('objetivos.id'))
+      objetivos_id = db.Column(db.Integer, db.ForeignKey('objetivos.id'))  
 
       def __repr__(self):
          return '<Acciones {}>' % (self.como)
