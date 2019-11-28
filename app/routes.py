@@ -11,16 +11,7 @@ from app.models import User, Objetivos
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    form = ObjetivosForm()
-    if form.validate_on_submit():
-        objetivos = Objetivos(nombre=form.nombre.data, que=form.que.data, porque=form.porque.data, author=current_user)
-        db.session.add(objetivos)
-        db.session.commit()
-        flash('Se cargo un Objetivo')
-        return redirect(url_for('index'))
-    obje = Objetivos.get_all()
-    
-    return render_template("index.html", title='Home Page', form=form, posts=obje)
+    return render_template("index.html", title='Home Page')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -101,15 +92,18 @@ def editarusuario():
     users = User.get_all()
     return render_template("editarusuario.html", title='Home Page', form=form, users=users)
 
-# @app.route("/cambiarcampos", methods=['GET', 'POST'])
-# def cambiarcampos(usuario):
-#     form = CambiarUser()
-#     if form.validate_on_submit():
-#         user = User.query.get(usuario)
-#         user = User(username=form.username.data, email=form.email.data, puesto=form.puesto.data)
-#         user.set_password(form.password.data)
-#         db.session.add(user)
-#         db.session.commit()
-#         flash('Bravo!!, Ya estas Registrado!!')
-#         return redirect(url_for('login'))
-#     return render_template('register.html', title='Register', form=form)
+@app.route("/objetivos", methods=['GET', 'POST'])
+def objetivos():
+    form = ObjetivosForm()
+    if form.validate_on_submit():
+        number_id = request.form.getlist("users")
+        #for a in number_id:
+        usuario = User.query.filter_by(id=number_id[0]).first()
+        objetivos = Objetivos(nombre=form.nombre.data, que=form.que.data, porque=form.porque.data, author=usuario)
+        db.session.add(objetivos)
+        db.session.commit()
+        flash('Se cargo un Objetivo')
+        return redirect(url_for('index'))
+    obje = Objetivos.get_all()
+    users = User.get_all()
+    return render_template("Objetivos.html", title='Objetivos', form=form, objetivos=obje, users=users)

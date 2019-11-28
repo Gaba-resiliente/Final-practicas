@@ -12,7 +12,7 @@
                 <label for="id_{{p.id}}">{{p.username}}</label>
             </div>
             {% endif %}
-    {% endfor %}
+        {% endfor %}
         <p>{{ form.submit() }}</p>
         <p>
             {{ form.username.label }}<br>
@@ -50,7 +50,6 @@
             {% endfor %}
         </p>
     </form>
-<!-- {% include '_editarusuario.html' %} -->
 {% endblock %}
 
 

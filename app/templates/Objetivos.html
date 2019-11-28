@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Asignar Objetivos</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {% for p in users %}
+            <div>
+                <input type="radio" id="{{p.id}}" name="users" value="{{p.id}}">
+                <label for="id_{{p.id}}">{{p.username}}</label>
+            </div>
+        {% endfor %}
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.nombre.label }}<br>
+            {{ form.nombre(size=32) }}<br>
+            {% for error in form.nombre.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.que.label }}<br>
+            {{ form.que(size=32) }}<br>
+            {% for error in form.que.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.porque.label }}<br>
+            {{ form.porque(size=32) }}<br>
+            {% for error in form.porque.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

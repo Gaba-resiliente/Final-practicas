@@ -36,7 +36,7 @@ class ObjetivosForm(FlaskForm):
         DataRequired(), Length(min=1, max=140)])
     porque = StringField('por que', validators=[
         DataRequired(), Length(min=1, max=140)])
-    submit = SubmitField('mandale pa!')
+    submit = SubmitField('Asignar Objetivos')
    
 class BajaUser(FlaskForm):
     username = StringField('Username')
