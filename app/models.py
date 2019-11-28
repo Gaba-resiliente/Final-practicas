@@ -42,6 +42,8 @@ class User (UserMixin, db.Model):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
+    def get_all():
+        return User.query.all()  
 
 @login.user_loader
 def load_user(id):

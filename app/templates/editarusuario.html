@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Editar</h1>
+    <h1>Hola!, {{ current_user.username }}!</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {% for p in users %}
+            {% if p.username != current_user.username %}
+            <div>
+                <input type="radio" id="{{p.id}}" name="users" value="{{p.id}}">
+                <label for="id_{{p.id}}">{{p.username}}</label>
+            </div>
+            {% endif %}
+    {% endfor %}
+        <p>{{ form.submit() }}</p>
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=64) }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=64) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password2.label }}<br>
+            {{ form.password2(size=64) }}<br>
+            {% for error in form.password2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.puesto.label }}<br>
+            {{ form.puesto(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+    </form>
+<!-- {% include '_editarusuario.html' %} -->
+{% endblock %}
+
+

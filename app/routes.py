@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ObjetivosForm
+from app.forms import LoginForm, RegistrationForm, ObjetivosForm, BajaUser, EditUser, CambiarUser
 from app.models import User, Objetivos
 
 
@@ -69,3 +69,47 @@ def user(username):
         {'author': user, 'body': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+
+@app.route('/bajausuario', methods=['GET', 'POST'])
+@login_required
+def bajausuario():
+    form = BajaUser()
+    if form.validate_on_submit():
+        lista = request.form.getlist("users")
+        for i in lista:
+            user = User.query.get(i)
+            db.session.delete(user)
+            db.session.commit()
+        return redirect(url_for('index'))
+    users = User.get_all()
+    return render_template("bajausuario.html", title='Home Page', form=form, users=users)
+
+@app.route('/editarusuario', methods=['GET', 'POST'])
+@login_required
+def editarusuario():
+    form = EditUser()
+    if form.validate_on_submit():
+        number_id = request.form.getlist("users")
+        #for a in number_id:
+        usuario = User.query.filter_by(id=number_id[0]).first()
+        usuario.username=form.username.data
+        usuario.email=form.email.data
+        usuario.puesto=form.puesto.data
+        usuario.set_password(form.password.data)
+        db.session.commit()
+        flash('Bravo!!, editaste un usuario')
+    users = User.get_all()
+    return render_template("editarusuario.html", title='Home Page', form=form, users=users)
+
+# @app.route("/cambiarcampos", methods=['GET', 'POST'])
+# def cambiarcampos(usuario):
+#     form = CambiarUser()
+#     if form.validate_on_submit():
+#         user = User.query.get(usuario)
+#         user = User(username=form.username.data, email=form.email.data, puesto=form.puesto.data)
+#         user.set_password(form.password.data)
+#         db.session.add(user)
+#         db.session.commit()
+#         flash('Bravo!!, Ya estas Registrado!!')
+#         return redirect(url_for('login'))
+#     return render_template('register.html', title='Register', form=form)

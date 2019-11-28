@@ -17,6 +17,7 @@ entornoflask/
 pkg/
 src/
 venv/
+app/app.db
 __pycache__/objetivos.cpython-37.pyc
  app/__pycache__/__init__.cpython-37.pyc                                
  app/__pycache__/forms.cpython-37.pyc                                       
