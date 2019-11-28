@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Eliminar Objetivos</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {% for p in users %}
+            <div>
+                <input type="checkbox" id="{{p.id}}" name="users" value="{{p.id}}">
+                <label for="id_{{p.id}}">{{p.username}}</label>
+            </div>
+        {% endfor %}
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

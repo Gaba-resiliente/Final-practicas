@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ObjetivosForm, BajaUser, EditUser, CambiarUser
+from app.forms import LoginForm, RegistrationForm, ObjetivosForm, BajaUser, EditUser, CambiarUser, BorrarObjetivo
 from app.models import User, Objetivos
 
 
@@ -111,3 +111,18 @@ def objetivos():
     users = User.get_all()
     return render_template("Objetivos.html", title='Objetivos', form=form, objetivos=obje, users=users)
 
+@app.route("/eliminarobjetivos", methods=['GET', 'POST'])
+def eliminarobjetivos():
+    form = BorrarObjetivo()
+    if form.validate_on_submit():
+        number_id = request.form.getlist("users")
+        for i in number_id:
+            user = User.query.get(i)
+            obj = user.objetivos.all()
+            for p in obj:
+                db.session.delete(p)
+                db.session.commit()
+        flash('Se cargo un Objetivo')
+        return redirect(url_for('index'))
+    users = User.get_all()
+    return render_template("Objetivos.html", title='Objetivos', form=form, users=users)

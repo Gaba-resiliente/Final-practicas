@@ -23,18 +23,18 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('Papu usa otro nombre.')
+            raise ValidationError('Nombre ya utilizado, ingresar otro nombre.')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Papu usa otro email.')
+            raise ValidationError('email ya usado, ingresar otro.')
 class ObjetivosForm(FlaskForm):
     nombre= StringField('Nombre', validators=[
         DataRequired(), Length(min=1, max=140)])
-    que = StringField('Que', validators=[
+    que = StringField('¿Que se quiere hacer?', validators=[
         DataRequired(), Length(min=1, max=140)])
-    porque = StringField('por que', validators=[
+    porque = StringField('¿Por Que?', validators=[
         DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Asignar Objetivos')
    
@@ -56,13 +56,12 @@ class EditUser(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('Papu usa otro nombre.')
+            raise ValidationError('Usar otro nombre')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Papu usa otro email.')
-
+            raise ValidationError('Usar otro email.')
 class CambiarUser(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -75,9 +74,15 @@ class CambiarUser(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('Papu usa otro nombre.')
+            raise ValidationError('Usar otro nombre.')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Papu usa otro email.')
+            raise ValidationError('Usa otro email.')
+
+class BorrarObjetivo(FlaskForm):
+    nombre= StringField('Nombre')
+    que = StringField('¿Que se quiere hacer?')
+    porque = StringField('¿Por Que?')
+    submit = SubmitField('Aceptar')
